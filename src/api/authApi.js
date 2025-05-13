@@ -4,6 +4,7 @@ export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
+        credentials: "include", 
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -13,7 +14,14 @@ export const authApi = createApi({
                 body: userData,
             }),
         }),
+        loginUser: builder.mutation({
+            query: (credentials) => ({
+                url: "/auth/login",
+                method: "POST",
+                body: credentials,
+            }),
+        }),
     }),
 });
 
-export const { useRegisterUserMutation } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation } = authApi;

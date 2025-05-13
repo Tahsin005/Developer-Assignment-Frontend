@@ -1,9 +1,20 @@
+import LoginForm from "../../components/LoginForm/LoginForm";
+
 const LoginPage = () => {
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-center mb-6">Login (TBD)</h2>
-                <p className="text-center">Login page will be implemented next.</p>
+        <div className="min-h-screen flex flex-col lg:flex-row-reverse bg-white">
+            <div className="hidden lg:flex items-center justify-center w-1/2 bg-gradient-to-br from-purple-500 to-purple-700 text-white p-10">
+                <div className="max-w-md text-center">
+                    <h2 className="text-4xl font-bold mb-4">Welcome Back!</h2>
+                    <p className="text-lg opacity-90">
+                        Ready to grow your affiliate empire? <br />
+                        Log in to access your dashboard, manage AI-powered blog posts, and track your performance — all in one place.
+                    </p>
+                </div>
+            </div>
+
+            <div className="flex items-center justify-center w-full lg:w-1/2 px-4 py-10">
+                <LoginForm />
             </div>
         </div>
     );
