@@ -4,7 +4,14 @@ export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
-        credentials: "include", 
+        credentials: "include",
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().auth.user?.token;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -21,7 +28,13 @@ export const authApi = createApi({
                 body: credentials,
             }),
         }),
+        logoutUser: builder.mutation({
+            query: () => ({
+                url: "/auth/logout",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation } = authApi;

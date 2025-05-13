@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLoginUserMutation } from '../../api/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { resetAuthState, setSuccess } from '../../features/auth/authSlice';
+import { resetAuthState, setSuccess, setUser } from '../../features/auth/authSlice';
 import toast from 'react-hot-toast';
 
 const LoginForm = () => {
@@ -13,6 +13,7 @@ const LoginForm = () => {
 
     const [loginUser, { isLoading, error }] = useLoginUserMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,13 +23,27 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await loginUser(formData).unwrap();
-            console.log(response)
+            const { token, id, role, username } = response;
+            const userData = {
+                id: id,
+                name: username,
+                role: role,
+                token,
+            };
+
             localStorage.setItem('token', response.token);
             localStorage.setItem('role', response.role);
             localStorage.setItem('username', response.username);
             localStorage.setItem('id', response.id);
+
+            document.cookie = `token=${token}; path=/; max-age=86400`;
+            document.cookie = `id=${id}; path=/; max-age=86400`;
+            document.cookie = `role=${role}; path=/; max-age=86400`;
+            document.cookie = `username=${username}; path=/; max-age=86400`;
+
+            dispatch(setUser(userData));
             toast.success('Login successful!');
-            navigate('/');
+            navigate('/me');
         } catch (err) {
             toast.error(error?.data?.error || 'Login failed');
         }
@@ -59,7 +74,7 @@ const LoginForm = () => {
                     className={`w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                 >
-                    {isLoading ? 'Loging...' : 'Login'}
+                    {isLoading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
             <p className="mt-4 text-center text-sm text-gray-600">
