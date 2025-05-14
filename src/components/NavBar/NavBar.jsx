@@ -7,6 +7,7 @@ import {
     selectIsAdminOrHigher,
     selectIsModeratorOrHigher,
     selectUserId,
+    resetAuthState,
 } from '../../features/auth/authSlice';
 import { logout } from '../../features/auth/authSlice';
 import { useLogoutUserMutation } from '../../api/authApi';
@@ -26,6 +27,7 @@ const NavBar = () => {
     const handleLogout = async () => {
         dispatch(logout());
         await logoutUser();
+        dispatch(resetAuthState());
         navigate('/login');
         toast.success("Logout Successful")
         setIsMenuOpen(false);

@@ -26,7 +26,7 @@ const LoginForm = () => {
             const { token, id, role, username } = response;
             const userData = {
                 id: id,
-                name: username,
+                username: username,
                 role: role,
                 token,
             };
@@ -40,7 +40,7 @@ const LoginForm = () => {
             document.cookie = `id=${id}; path=/; max-age=86400`;
             document.cookie = `role=${role}; path=/; max-age=86400`;
             document.cookie = `username=${username}; path=/; max-age=86400`;
-
+            dispatch(resetAuthState());
             dispatch(setUser(userData));
             toast.success('Login successful!');
             navigate('/me');
