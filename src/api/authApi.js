@@ -34,7 +34,35 @@ export const authApi = createApi({
                 method: "GET",
             }),
         }),
+        resendVerification: builder.mutation({
+            query: (data) => ({
+                url: "/auth/resend-verification",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        resetPasswordRequest: builder.mutation({
+            query: (data) => ({
+                url: "/auth/reset-request",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        resetPassword: builder.mutation({
+            query: (data) => ({
+                url: "/auth/password-reset",
+                method: "POST",
+                body: data,
+            })
+        })
     }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation } = authApi;
+export const { 
+    useRegisterUserMutation, 
+    useLoginUserMutation, 
+    useLogoutUserMutation, 
+    useResendVerificationMutation,
+    useResetPasswordRequestMutation,
+    useResetPasswordMutation,
+ } = authApi;
