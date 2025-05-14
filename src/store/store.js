@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from '../api/authApi';
-import authReducer from '../features/auth/authSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { authApi } from '../api/authApi';
+import { userApi } from '../api/userApi';
+import authReducer from '../features/auth/authSlice';
+import userReducer from '../features/user/userSlice';
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -26,18 +28,20 @@ const id = localStorage.getItem('id') || getCookie('id');
 if (token && role && username && id) {
     preloadedState.auth.user = { id, username, role, token };
     preloadedState.auth.isAuthenticated = true;
-    console.log(preloadedState.auth)
-    console.log(preloadedState.auth.isAuthenticated)
-    console.log(preloadedState.auth.user)
+    console.log('Preloaded Auth State:', preloadedState.auth);
+    console.log('Is Authenticated:', preloadedState.auth.isAuthenticated);
+    console.log('User:', preloadedState.auth.user);
 }
 
 export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
         auth: authReducer,
+        user: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware),
+        getDefaultMiddleware().concat(authApi.middleware, userApi.middleware),
     preloadedState,
 });
 

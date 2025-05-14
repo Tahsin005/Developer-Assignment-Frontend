@@ -32,7 +32,7 @@ const RegisterForm = () => {
         try {
             await registerUser(formData).unwrap();
             dispatch(setSuccess(true));
-            toast.success('Registration successful! Redirecting to login...');
+            toast.success('Registration successful & Check email for verification link...');
         } catch (err) {
             toast.error(error?.data?.error || 'Registration failed');
         }

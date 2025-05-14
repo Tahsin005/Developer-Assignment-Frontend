@@ -58,11 +58,11 @@ export const authApi = createApi({
     }),
 });
 
-export const { 
-    useRegisterUserMutation, 
-    useLoginUserMutation, 
-    useLogoutUserMutation, 
+export const {
+    useRegisterUserMutation,
+    useLoginUserMutation,
+    useLogoutUserMutation,
     useResendVerificationMutation,
     useResetPasswordRequestMutation,
     useResetPasswordMutation,
- } = authApi;
+} = authApi;

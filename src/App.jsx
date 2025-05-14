@@ -58,8 +58,11 @@ const App = () => {
           <Route path="/users/:user_id/delete" element={<DeleteUserPage />} />
         </Route>
 
-        <Route element={<RoleBasedRoute allowedRoles={['admin', 'system_admin']} />}>
+        <Route element={<RoleBasedRoute allowedRoles={['admin', 'system_admin', 'moderator']} />}>
           <Route path="/users" element={<UserListPage />} />
+        </Route>
+
+        <Route element={<RoleBasedRoute allowedRoles={['admin', 'system_admin']} />}>
           <Route path="/users/:user_id/role" element={<ChangeRolePage />} />
           <Route path="/users/:user_id/promote/moderator" element={<PromoteModeratorPage />} />
           <Route path="/users/:user_id/demote" element={<DemoteUserPage />} />
