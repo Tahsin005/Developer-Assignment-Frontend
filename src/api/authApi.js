@@ -5,13 +5,13 @@ export const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
         credentials: "include",
-        prepareHeaders: (headers, { getState }) => {
-            const token = getState().auth.user?.token;
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-            return headers;
-        },
+        // prepareHeaders: (headers, { getState }) => {
+        //     const token = getState().auth.user?.token;
+        //     if (token) {
+        //         headers.set('Authorization', `Bearer ${token}`);
+        //     }
+        //     return headers;
+        // },
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -33,6 +33,7 @@ export const authApi = createApi({
                 url: "/auth/logout",
                 method: "GET",
             }),
+            invalidatesTags: ['User'],
         }),
         resendVerification: builder.mutation({
             query: (data) => ({

@@ -12,6 +12,7 @@ import {
 import { logout } from '../../features/auth/authSlice';
 import { useLogoutUserMutation } from '../../api/authApi';
 import toast from 'react-hot-toast';
+import { userApi } from '../../api/userApi';
 
 const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +27,7 @@ const NavBar = () => {
 
     const handleLogout = async () => {
         dispatch(logout());
-        await logoutUser();
+        await logoutUser().unwrap();
         dispatch(resetAuthState());
         navigate('/login');
         toast.success("Logout Successful")
@@ -58,9 +59,6 @@ const NavBar = () => {
                         )}
                         <Link to="/me" className={linkClass}>
                             Profile
-                        </Link>
-                        <Link to={`/users/${userId}`} className={linkClass}>
-                            My Account
                         </Link>
                         {isModeratorOrHigher && (
                             <Link to="/users" className={linkClass}>
@@ -125,13 +123,6 @@ const NavBar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Profile
-                            </Link>
-                            <Link
-                                to={`/users/${userId}`}
-                                className={linkClass}
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                My Account
                             </Link>
                             {isModeratorOrHigher && (
                                 <Link

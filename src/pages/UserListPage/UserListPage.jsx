@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGetUsersQuery } from '../../api/userApi';
 import { Info } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { selectIsAdminOrHigher } from '../../features/auth/authSlice';
+import { selectIsAdminOrHigher, selectUserId } from '../../features/auth/authSlice';
 import toast from 'react-hot-toast';
 
 const UserListPage = () => {
@@ -15,6 +15,8 @@ const UserListPage = () => {
     console.log("Are mama, access ase naki? ", isSystemAdminOrAdmin);
     const { data, error, isLoading } = useGetUsersQuery();
     const users = data?.users || [];
+
+    const loggedInUserId = useSelector(selectUserId);
 
     const handleSort = (field) => {
         setSortField(field);
@@ -119,12 +121,14 @@ const UserListPage = () => {
                                             </Link>
                                             {isSystemAdminOrAdmin && (
                                                 <>
-                                                    <Link
+                                                    {!(loggedInUserId === user.id) && (
+                                                        <Link
                                                         to={`/users/${user.id}/delete`}
                                                         className="text-red-600 hover:underline block"
                                                     >
                                                         Delete
                                                     </Link>
+                                                    )}
                                                     <Link
                                                         to={`/users/${user.id}/role`}
                                                         className="text-blue-600 hover:underline block"

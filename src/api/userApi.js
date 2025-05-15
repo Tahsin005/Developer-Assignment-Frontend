@@ -4,25 +4,37 @@ export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
-        prepareHeaders: (headers, { getState }) => {
-            const token = getState().auth.user?.token;
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-            return headers;
-        },
+        credentials: "include",
+        // prepareHeaders: (headers, { getState }) => {
+        //     const token = getState().auth.user?.token;
+        //     if (token) {
+        //         headers.set('Authorization', `Bearer ${token}`);
+        //     }
+        //     return headers;
+        // },
     }),
+    tagTypes: ['User'],
     endpoints: (builder) => ({
         getUsers: builder.query({
             query: () => ({
                 url: "/users/",
                 method: "GET",
             }),
+            providesTags: ['User'],
         }),
         getUserById: builder.query({
             query: (userId) => `/users/${userId}`,
+            providesTags: (result, error, userId) => [{ type: 'User', id: userId }],
+        }),
+        getMe: builder.query({
+            query: () => '/me',
+            providesTags: ['User'],
+        }),
+        getMePermissions: builder.query({
+            query: () => '/me/permissions',
+            providesTags: ['User'],
         }),
     }),
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery } = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useGetMeQuery, useGetMePermissionsQuery } = userApi;
