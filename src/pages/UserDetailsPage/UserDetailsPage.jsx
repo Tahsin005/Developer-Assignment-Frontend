@@ -56,7 +56,12 @@ const UserDetailsPage = () => {
                         ].map(([label, value]) => (
                             <div key={label}>
                                 <p className="text-sm text-gray-500">{label}</p>
-                                <p className="text-lg font-semibold text-gray-800 break-words">{value}</p>
+                                <p
+                                    className={`text-lg font-semibold break-words ${!user.active ? 'line-through text-gray-400' : 'text-gray-800'
+                                        }`}
+                                >
+                                    {value}
+                                </p>
                             </div>
                         ))}
                     </div>

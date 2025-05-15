@@ -101,15 +101,30 @@ const UserListPage = () => {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200 text-sm text-gray-700">
                                 {sortedUsers.map((user) => (
-                                    <tr key={user.id} className={`border-b hover:bg-gray-50 ${!user.active ? 'bg-red-50' : ''} ${user.deletion_requested ? 'bg-red-400' : ''
-                                        }`}>
-                                        <td className="px-4 py-3">{user.id}</td>
-                                        <td className="px-4 py-3">{user.username}</td>
-                                        <td className="px-4 py-3">{user.email}</td>
-                                        <td className="px-4 py-3">{user.first_name}</td>
-                                        <td className="px-4 py-3">{user.last_name}</td>
-                                        <td className="px-4 py-3">{user.user_type}</td>
-                                        <td className="px-4 py-3">
+                                    <tr
+                                        key={user.id}
+                                        className={`border-b hover:bg-gray-50 ${!user.active ? 'bg-red-50' : ''} ${user.deletion_requested ? 'bg-red-400' : ''
+                                            }`}
+                                    >
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.id}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.username}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.email}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.first_name}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.last_name}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
+                                            {user.user_type}
+                                        </td>
+                                        <td className={`px-4 py-3 ${!user.active ? 'line-through text-gray-400' : ''}`}>
                                             {new Date(user.created_at).toLocaleString()}
                                         </td>
                                         <td className="px-4 py-3 space-y-1">
@@ -123,11 +138,11 @@ const UserListPage = () => {
                                                 <>
                                                     {!(loggedInUserId === user.id) && (
                                                         <Link
-                                                        to={`/users/${user.id}/delete`}
-                                                        className="text-red-600 hover:underline block"
-                                                    >
-                                                        Delete
-                                                    </Link>
+                                                            to={`/users/${user.id}/delete`}
+                                                            className="text-red-600 hover:underline block"
+                                                        >
+                                                            Delete
+                                                        </Link>
                                                     )}
                                                     <Link
                                                         to={`/users/${user.id}/role`}
