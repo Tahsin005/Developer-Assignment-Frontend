@@ -26,6 +26,14 @@ export const userApi = createApi({
             query: (userId) => `/users/${userId}`,
             providesTags: (result, error, userId) => [{ type: 'User', id: userId }],
         }),
+        updateUser: builder.mutation({
+            query: ({ user_id, userData }) => ({
+                url: `/users/${user_id}`,
+                method: "PUT",
+                body: userData,
+            }),
+            invalidatesTags: (result, error, { userId }) => [{ type: 'User', id: userId }, 'User'],
+        }),
         getMe: builder.query({
             query: () => '/me',
             providesTags: ['User'],
@@ -37,4 +45,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useGetMeQuery, useGetMePermissionsQuery } = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useUpdateUserMutation, useGetMeQuery, useGetMePermissionsQuery } = userApi;
