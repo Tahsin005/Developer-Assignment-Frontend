@@ -6,6 +6,8 @@ import { permissionApi } from '../api/permissionApi';
 import authReducer from '../features/auth/authSlice';
 import userReducer from '../features/user/userSlice';
 import permissionReducer from '../features/permission/permissionSlice';
+import roleReducer from '../features/role/roleSlice';
+import { roleApi } from '../api/roleApi';
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -22,6 +24,14 @@ const preloadedState = {
     },
     permission: {
         selectedPermission: null,
+    },
+    role: {
+        selectedRole: null,
+        formData: {
+            id: '',
+            name: '',
+            description: '',
+        },
     },
 };
 
@@ -43,12 +53,14 @@ export const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [permissionApi.reducerPath]: permissionApi.reducer,
+        [roleApi.reducerPath]: roleApi.reducer,
         auth: authReducer,
         user: userReducer,
         permission: permissionReducer,
+        role: roleReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware, userApi.middleware, permissionApi.middleware),
+        getDefaultMiddleware().concat(authApi.middleware, userApi.middleware, permissionApi.middleware, roleApi.middleware),
     preloadedState,
 });
 
