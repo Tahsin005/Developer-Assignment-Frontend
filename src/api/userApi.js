@@ -41,6 +41,13 @@ export const userApi = createApi({
             }),
             invalidatesTags: ['User'], 
         }),
+        requestUserDeletion: builder.mutation({
+            query: (userId) => ({
+                url: `/users/${userId}/request-deletion`,
+                method: "POST",
+            }),
+            invalidatesTags: ['User'],
+        }),
         getMe: builder.query({
             query: () => '/me',
             providesTags: ['User'],
@@ -52,4 +59,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useUpdateUserMutation, useDeleteUserMutation, useGetMeQuery, useGetMePermissionsQuery } = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useUpdateUserMutation, useDeleteUserMutation, useRequestUserDeletionMutation, useGetMeQuery, useGetMePermissionsQuery } = userApi;

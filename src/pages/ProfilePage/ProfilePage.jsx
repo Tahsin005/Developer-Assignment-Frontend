@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
+import { Info } from 'lucide-react';
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -118,6 +119,13 @@ const ProfilePage = () => {
                             ))}
                         </div>
 
+                        {user.deletion_requested && (
+                            <div className='my-4 flex text-red-500 gap-x-2'>
+                                <Info className="w-5 h-5" />
+                                You have reqeuested for account deletion
+                            </div>
+                        )}
+
                         <div className="mt-8">
                             <h3 className="text-lg font-semibold text-gray-800 mb-4">Permissions</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -137,6 +145,14 @@ const ProfilePage = () => {
                         </div>
 
                         <div className="mt-6 flex space-x-4 justify-center">
+                            {!user.deletion_requested && (
+                                <Link
+                                to={`/users/${user.id}/request-deletion`}
+                                className="text-red-600 hover:underline font-medium"
+                            >
+                                Request Deletion
+                            </Link>
+                            )}
                             <Link
                                 to={`/users/${user.id}/update`}
                                 className="text-blue-600 hover:underline font-medium"
