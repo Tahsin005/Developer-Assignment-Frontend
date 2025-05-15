@@ -2,8 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { authApi } from '../api/authApi';
 import { userApi } from '../api/userApi';
+import { permissionApi } from '../api/permissionApi';
 import authReducer from '../features/auth/authSlice';
 import userReducer from '../features/user/userSlice';
+import permissionReducer from '../features/permission/permissionSlice';
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -17,7 +19,10 @@ const preloadedState = {
         user: null,
         success: false,
         isAuthenticated: false,
-    }
+    },
+    permission: {
+        selectedPermission: null,
+    },
 };
 
 const token = localStorage.getItem('token') || getCookie('token');
@@ -37,11 +42,13 @@ export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [permissionApi.reducerPath]: permissionApi.reducer,
         auth: authReducer,
         user: userReducer,
+        permission: permissionReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware, userApi.middleware),
+        getDefaultMiddleware().concat(authApi.middleware, userApi.middleware, permissionApi.middleware),
     preloadedState,
 });
 
