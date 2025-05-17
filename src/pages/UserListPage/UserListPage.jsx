@@ -146,6 +146,9 @@ const UserListPage = () => {
                                                     )}
                                                     <Link
                                                         to={`/users/${user.id}/role`}
+                                                        state={{
+                                                            currentUserRole: user.user_type
+                                                        }}
                                                         className="text-blue-600 hover:underline block"
                                                     >
                                                         Change Role

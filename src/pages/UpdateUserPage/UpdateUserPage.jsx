@@ -3,13 +3,14 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/userApi';
 import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, selectIsModeratorOrHigher } from '../../features/auth/authSlice';
+import { logout, selectIsModeratorOrHigher, setUser } from '../../features/auth/authSlice';
 
 const UpdateUserPage = () => {
     const { user_id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const userNameState = useSelector((state) => state.auth.user?.username);
     const isModeratorOrHigher = useSelector(selectIsModeratorOrHigher);
 
     const { data, error, isLoading, refetch } = useGetUserByIdQuery(user_id, {
@@ -52,6 +53,15 @@ const UpdateUserPage = () => {
         try {
             await updateUser({ user_id, userData: formData }).unwrap();
             toast.success('User updated successfully!');
+            localStorage.setItem('username', formData.username)
+            const userData = {
+                id: localStorage.getItem('id'),
+                username: localStorage.getItem('username'),
+                role: localStorage.getItem('role'),
+                token: localStorage.getItem('token'),
+            };
+
+            dispatch(setUser(userData));
             if (isModeratorOrHigher) {
                 navigate(`/users/${user_id}`);
             } else {

@@ -38,7 +38,7 @@ const authSlice = createSlice({
 });
 
 export const selectIsSystemAdmin = (state) => {
-    state.auth.user?.role === 'system_admin';
+    return state.auth.user?.role === 'system_admin';
 }
 export const selectIsAdminOrHigher = (state) => ['admin', 'system_admin'].includes(state.auth.user?.role);
 export const selectIsModeratorOrHigher = (state) => ['moderator', 'admin', 'system_admin'].includes(state.auth.user?.role);

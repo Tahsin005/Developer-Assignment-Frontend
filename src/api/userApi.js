@@ -56,7 +56,37 @@ export const userApi = createApi({
             query: () => '/me/permissions',
             providesTags: ['User'],
         }),
+        changeUserRole: builder.mutation({
+            query: ({ user_id, role}) => ({
+                url: `/users/${user_id}/role`,
+                method: "POST",
+                body: { role },
+            }),
+            invalidatesTags: ['User'],
+        }),
+        promoteToAdmin: builder.mutation({
+            query: (user_id) => ({
+                url: `/users/${user_id}/promote/admin`,
+                method: "POST",
+            }),
+            invalidatesTags: ['User'],
+        }),
+        promoteToModerator: builder.mutation({
+            query: (user_id) => ({
+                url: `/users/${user_id}/promote/moderator`,
+                method: "POST",
+            }),
+            invalidatesTags: ['User'],
+        }),
+        demoteUser: builder.mutation({
+            query: ({ user_id, role}) => ({
+                url: `/users/${user_id}/demote`,
+                method: "POST",
+                body: { role },
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useUpdateUserMutation, useDeleteUserMutation, useRequestUserDeletionMutation, useGetMeQuery, useGetMePermissionsQuery } = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useUpdateUserMutation, useDeleteUserMutation, useRequestUserDeletionMutation, useGetMeQuery, useGetMePermissionsQuery, useChangeUserRoleMutation, usePromoteToAdminMutation, usePromoteToModeratorMutation, useDemoteUserMutation } = userApi;
