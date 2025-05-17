@@ -75,11 +75,6 @@ const NavBar = () => {
                                 </Link>
                             </>
                         )}
-                        {isSystemAdmin && (
-                            <Link to="/users/promote/admin" className={linkClass}>
-                                Promote to Admin
-                            </Link>
-                        )}
                         <button onClick={handleLogout} className={buttonClass}>
                             Logout
                         </button>
@@ -150,15 +145,6 @@ const NavBar = () => {
                                         Permissions
                                     </Link>
                                 </>
-                            )}
-                            {isSystemAdmin && (
-                                <Link
-                                    to="/users/promote/admin"
-                                    className={linkClass}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Promote to Admin
-                                </Link>
                             )}
                             <button
                                 onClick={handleLogout}
